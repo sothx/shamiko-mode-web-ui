@@ -59,7 +59,11 @@ fi
 
 # KSU Web UI
 is_need_install_ksu_web_ui=1
+HAS_BEEN_INSTALLED_KsuWebUI_APK=$(pm list packages | grep io.github.a13e300.ksuwebui)
 if [[ "$KSU" == "true" || "$APATCH" == "true" ]]; then
+  is_need_install_ksu_web_ui=0
+fi
+if [[ $HAS_BEEN_INSTALLED_KsuWebUI_APK == *"package:io.github.a13e300.ksuwebui"* ]]; then
   is_need_install_ksu_web_ui=0
 fi
 if [[ $is_need_install_ksu_web_ui == 1 ]]; then
