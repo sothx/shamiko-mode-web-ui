@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script type="module" src="./assets/ResizeObserver.global.js"></script>
+    <script src="./assets/vue.global.js"></script>
+    <script src="./assets/naive-ui.js"></script>
+    <script type="module" src="./assets/kernelsu/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="./assets/style.css">
+  </head>
+  <body>
+    <div id="app">
+        <header id="header">header</header>
+        <main id="main">main</main>
+        <footer id="footer">footer</footer>
+    </div>
+    <script type="module">
+      import { exec } from './assets/kernelsu/index.js';
+      import resizeObserverPolyfill from './assets/ResizeObserver.global.js';
+      const { createApp, ref, onMounted } = Vue;
+
+      const app = createApp({
+        setup() {
+          const message = ref("Hello vue!");
+          onMounted(() => {
+            console.log(exec);
+          });
+          return {
+            message,
+          };
+        },
+      });
+
+      app.use(naive);
+      app.mount("#app");
+
+      const ro = new ResizeObserver((entries, observer) => {
+            for (const entry of entries) {
+                const {left, top, width, height} = entry.contentRect;
+
+                console.log('Element:', entry.target);
+                console.log(`Element's size: ${ width }px x ${ height }px`);
+                console.log(`Element's paddings: ${ top }px ; ${ left }px`);
+            }
+        });
+
+        ro.observe(document.body);
+    </script>
+  </body>
+</html>
